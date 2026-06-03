@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fifoow - Téléchargement</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a1a;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .logo {
+      width: 80px; height: 80px;
+      background: linear-gradient(145deg, #ff7a00, #e05500);
+      border-radius: 20px;
+      display: flex; justify-content: center; align-items: center;
+      font-size: 40px; font-weight: 800; color: white;
+      box-shadow: 0 0 30px rgba(255,107,0,0.4);
+    }
+    h1 { color: #fff; font-size: 22px; font-weight: 800; text-align: center; }
+    p { color: #999; font-size: 14px; text-align: center; padding: 0 30px; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 4px solid #333;
+      border-top: 4px solid #ff7a00;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .status { color: #ff7a00; font-size: 13px; font-weight: 600; letter-spacing: 1px; }
+    .manual-links { display: none; flex-direction: column; gap: 12px; margin-top: 10px; }
+    .btn {
+      background: linear-gradient(135deg, #ff7a00, #e05500);
+      color: #fff; border: none; border-radius: 50px;
+      padding: 14px 32px; font-size: 13px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; text-align: center;
+      box-shadow: 0 4px 20px rgba(255,107,0,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">F</div>
+  <h1>Fifoow</h1>
+  <p>Détection de votre appareil en cours...</p>
+  <div class="spinner" id="spinner"></div>
+  <div class="status" id="status">Redirection automatique...</div>
+  <div class="manual-links" id="manual">
+    <a href="https://play.google.com/store/apps/details?id=com.guineemarket.mobile" class="btn">▶ Android - Google Play</a>
+    <a href="https://tinyurl.com/fifoowios" class="btn">▶ iPhone - App Store</a>
+  </div>
+  <script>
+    const androidUrl = "https://play.google.com/store/apps/details?id=com.guineemarket.mobile";
+    const iosUrl = "https://tinyurl.com/fifoowios";
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    setTimeout(function() {
+      if (/android/i.test(ua)) {
+        document.getElementById('status').textContent = "📱 Android détecté → Google Play";
+        setTimeout(() => { window.location.href = androidUrl; }, 800);
+      } else if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+        document.getElementById('status').textContent = "🍎 iPhone détecté → App Store";
+        setTimeout(() => { window.location.href = iosUrl; }, 800);
+      } else {
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('status').textContent = "Choisissez votre plateforme :";
+        document.getElementById('manual').style.display = 'flex';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
